@@ -5,10 +5,13 @@
     <h3 v-if="!postList">Wait for loading posts...</h3>
 
     <template v-if="postsForShow.length">
-      <div v-for="post in postsForShow">
-        <h3>{{ post.title }}</h3>
-        <p>{{ post.body }}</p>
-        <p>Author: {{ post.userName }}</p>
+      <div
+        class="post"
+        v-for="post in postsForShow"
+      >
+        <h3 class="post__heading">{{ post.title }}</h3>
+        <p class="post__content">{{ post.body }}</p>
+        <p class="post__author">Author: {{ post.userName }}</p>
       </div>
 
       <button
@@ -35,7 +38,7 @@
 
   const filteredPosts = computed(() => {
     return postList.value
-      .filter(post => post.userName && post.userName.includes(author.value))
+      .filter(post => post.userName && post.userName.toLocaleLowerCase().includes(author.value.toLocaleLowerCase()))
   })
 
   const postsForShow = computed(() => {
@@ -60,3 +63,21 @@
     })
   })
 </script>
+
+<style lang="scss" scoped>
+  .post {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid grey;
+    border-radius: 5px;
+
+    &__heading {
+      margin-top: 0;
+    }
+
+    &__author {
+      text-align: right;
+      margin-right: 20px;
+    }
+  }
+</style>
